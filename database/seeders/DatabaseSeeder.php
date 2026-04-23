@@ -27,15 +27,17 @@ class DatabaseSeeder extends Seeder
 
         foreach (range(1, 24) as $number) {
             $email = sprintf('smoke-user-%02d@dokploy-smoke.test', $number);
+            $user = User::factory()->make([
+                'name' => sprintf('Smoke User %02d', $number),
+                'password' => Hash::make('password'),
+            ]);
 
             User::query()->updateOrCreate(
                 ['email' => $email],
-                User::factory()->make([
-                    'name' => sprintf('Smoke User %02d', $number),
-                    'email' => $email,
-                    'password' => Hash::make('password'),
-                    'email_verified_at' => now(),
-                ])->getAttributes(),
+                [
+                    'name' => $user->name,
+                    'password' => $user->password,
+                ],
             );
         }
     }

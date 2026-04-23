@@ -14,6 +14,10 @@ php artisan migrate --force
 php artisan db:seed --force
 ```
 
+If a direct one-off shell is unavailable, temporarily set
+`DOKPLOY_RUN_DEPLOY_TASKS=true`, deploy once, then set it back to `false` and
+deploy again. Keep it disabled for normal production deploys.
+
 The app keeps `/up` enabled for Laravel's built-in health check. The `/` route displays the active database connection and latest seeded users.
 
 ## Seed Login

@@ -25,6 +25,18 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        User::factory(24)->create();
+        foreach (range(1, 24) as $number) {
+            $email = sprintf('smoke-user-%02d@dokploy-smoke.test', $number);
+
+            User::query()->updateOrCreate(
+                ['email' => $email],
+                User::factory()->make([
+                    'name' => sprintf('Smoke User %02d', $number),
+                    'email' => $email,
+                    'password' => Hash::make('password'),
+                    'email_verified_at' => now(),
+                ])->getAttributes(),
+            );
+        }
     }
 }
